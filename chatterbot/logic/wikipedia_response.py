@@ -19,7 +19,7 @@ class WikipediaResponseAdapter(LogicAdapter):
         
 
     def can_process(self, statement):
-        logic = ['what is', 'who is', 'apa itu', 'siapa itu'] 
+        logic = ['what is', 'who is', 'what is a'] 
         text = statement.text
         try:
             for i in logic:
@@ -38,8 +38,9 @@ class WikipediaResponseAdapter(LogicAdapter):
             for i in logic:
                 if text.startswith(i):
                     l=int(len(logic[idx]))
-                    idx+=1
                     break
+                else:
+                    idx+=1
         except Exception:
             print('no its here')
         request=statement.text[l:]
