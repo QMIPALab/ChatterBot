@@ -13,5 +13,5 @@ __all__ = (
     'SpecificResponseAdapter',
     'TimeLogicAdapter',
     'UnitConversion',
-    'WikipediaResponseAdapter',
+    'WikipediaResponseAdapter'
 )
