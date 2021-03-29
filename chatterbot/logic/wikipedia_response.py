@@ -15,23 +15,33 @@ class WikipediaResponseAdapter(LogicAdapter):
     """
 
     def __init__(self, chatbot, **kwargs):
-        super().__init__(chatbot, **kwargs)     
-        
+        super().__init__(chatbot, **kwargs)
+
+
+#    def can_process(self, statement):
+#        logic = ['what is', 'who is', 'what is a','siapa itu', 'siapa', 'siapakah','apa itu', 'apakah', 'kamu tau']
+#        text = statement.text
+#        try:
+#            for i in logic:
+#                if text.startswith(i):
+#                    return True
+#        except Exception as e:
+#            print('this is your error')
+#        return False
 
     def can_process(self, statement):
-        logic = ['what is', 'who is', 'what is a','siapa itu', 'siapa', 'siapakah','apa itu', 'apakah', 'kamu tau'] 
+        logic = 'tolong search'
         text = statement.text
         try:
-            for i in logic:
-                if text.startswith(i):
-                    return True
+            if text.startswith(i):
+                return True
         except Exception as e:
-            print('this is your error')
-
+            print('error')
         return False
 
     def process(self, statement, additional_response_selection_parameters=None):
-        logic = ['what is', 'who is', 'what is a','siapa itu', 'siapa', 'siapakah','apa itu', 'apakah', 'kamu tau'] 
+        #logic = ['what is', 'who is', 'what is a','siapa itu', 'siapa', 'siapakah','apa itu', 'apakah', 'kamu tau']
+        logic = 'tolong search'
         text = statement.text
         idx=0
         try:
@@ -64,5 +74,3 @@ class WikipediaResponseAdapter(LogicAdapter):
                 self.response_statement = Statement(text='mohon maaf, saya tidak tahu')
             self.response_statement.confidence = 0.7
         return self.response_statement
-
-
