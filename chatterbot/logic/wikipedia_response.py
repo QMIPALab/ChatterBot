@@ -47,12 +47,12 @@ class WikipediaResponseAdapter(LogicAdapter):
         try:
             if idx <= 2:
                 wikipedia.set_lang('en')
-                websum=wikipedia.summary(request, sentences=1, auto_suggest=false)
+                websum=wikipedia.summary(request, sentences=1)
                 self.response_statement = Statement(text=websum)
                 self.response_statement.confidence = 1
             else:
                 wikipedia.set_lang('id')
-                websum=wikipedia.summary(request, sentences=1,auto_suggest=false)
+                websum=wikipedia.summary(request, sentences=1)
                 self.response_statement = Statement(text=websum)
                 self.response_statement.confidence = 1
         except:
