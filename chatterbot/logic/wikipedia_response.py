@@ -19,7 +19,7 @@ class WikipediaResponseAdapter(LogicAdapter):
         
 
     def can_process(self, statement):
-        logic = ['what is', 'who is', 'what is a'] 
+        logic = ['what is', 'who is', 'what is a','siapa itu', 'siapa', 'siapakah','apa itu', 'apakah', 'kamu tau'] 
         text = statement.text
         try:
             for i in logic:
@@ -31,7 +31,7 @@ class WikipediaResponseAdapter(LogicAdapter):
         return False
 
     def process(self, statement, additional_response_selection_parameters=None):
-        logic = ['what is', 'who is', 'apa itu', 'siapa itu'] 
+        logic = ['what is', 'who is', 'what is a','siapa itu', 'siapa', 'siapakah','apa itu', 'apakah', 'kamu tau'] 
         text = statement.text
         idx=0
         try:
@@ -45,19 +45,24 @@ class WikipediaResponseAdapter(LogicAdapter):
             print('no its here')
         request=statement.text[l:]
         try:
-            websum=wikipedia.summary(request, sentences=1)
-            self.response_statement = Statement(text=websum)
-            self.response_statement.confidence = 1
+            if idx <= 2:
+                wikipedia.set_lang('en')
+                websum=wikipedia.summary(request, sentences=1, auto_suggest=false)
+                self.response_statement = Statement(text=websum)
+                self.response_statement.confidence = 1
+            else:
+                wikipedia.set_lang('id')
+                websum=wikipedia.summary(request, sentences=1,auto_suggest=false)
+                self.response_statement = Statement(text=websum)
+                self.response_statement.confidence = 1
         except:
-            if idx == 0:
+            if idx == 0 or idx == 2:
                 self.response_statement = Statement(text='sorry, we dont know what that is')
             if idx == 1:
                 self.response_statement = Statement(text='sorry, we dont know who that is')
-            if idx == 2:
+            if idx > 2:
                 self.response_statement = Statement(text='mohon maaf, saya tidak tahu')
-            if idx == 3:
-                self.response_statement = Statement(text='mohon maaf, saya tidak kenal')
-            self.response_statement.confidence = 0
+            self.response_statement.confidence = 0.7
         return self.response_statement
 
 
